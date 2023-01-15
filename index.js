@@ -11,37 +11,44 @@ const commands = [
   { command: '/uuid4 {quantidade}', description: 'Gera uma quantidade específica de UUIDs versão 4' },
 ];
 
-bot.onText(/\/help/, (msg) => {
-  const chatId = msg.chat.id;
-  let response = "Lista de comandos disponíveis: \n";
-  commands.forEach(cmd => {
-    response += `${cmd.command} - ${cmd.description}\n`;
-  });
-  bot.sendMessage(chatId, response);
-});
-
 bot.onText(/\/start/, (msg) => {
   const chatId = msg.chat.id;
   const keyboard = {
-    keyboard: [
+    inline_keyboard: [
       [
-        { text: '/uuid1' },
-        { text: '/uuid4' }
+        { text: 'UUID versão 1', callback_data: 'uuid1' },
+        { text: 'UUID versão 4', callback_data: 'uuid4' }
       ],
-      [
-        { text: '/help' }
-      ]
-    ],
-    resize_keyboard: true,
-    one_time_keyboard: true
+
+      [{ text: 'Ajuda', callback_data: 'help' }]
+
+    ]
   };
   bot.sendMessage(chatId, 'Selecione uma opção:', { reply_markup: JSON.stringify(keyboard) });
 });
 
-bot.onText(/\/uuid1/, (msg) => {
-  const chatId = msg.chat.id;
-  const uuid1 = generateUuid1();
-  bot.sendMessage(chatId, `\`${uuid1}\``, { parse_mode: 'Markdown' });
+bot.on('callback_query', (callbackQuery) => {
+  const message = callbackQuery.message;
+  const chatId = message.chat.id;
+  const data = callbackQuery.data;
+
+  switch (data) {
+    case 'uuid1':
+      const uuid1 = generateUuid1();
+      bot.sendMessage(chatId, uuid1, { parse_mode: 'markdown' });
+      break;
+    case 'uuid4':
+      const uuid4 = generateUuid4();
+      bot.sendMessage(chatId, uuid4, { parse_mode: "Markdown" });
+      break;
+    case 'help':
+      let response = "Lista de comandos disponíveis: \n";
+      commands.forEach(cmd => {
+        response += `${cmd.command} - ${cmd.description}\n`;
+      });
+      bot.sendMessage(chatId, response);
+      break;
+  }
 });
 
 bot.onText(/\/uuid4( \d+)?/, (msg, match) => {
