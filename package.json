@@ -1,0 +1,28 @@
+{
+  "name": "uuid-gen-bot",
+  "version": "1.0.0",
+  "description": "Bot para gerar uuid no telegram",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js",
+    "dev": "nodemon index.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Caiuzu/uuid-gen-bot.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Caiuzu/uuid-gen-bot/issues"
+  },
+  "homepage": "https://github.com/Caiuzu/uuid-gen-bot#readme",
+  "dependencies": {
+    "dotenv": "^16.0.3",
+    "node-telegram-bot-api": "^0.61.0",
+    "nodemon": "^2.0.20",
+    "prettier": "^2.8.3"
+  }
+}
