@@ -5,6 +5,14 @@ const token = process.env.TELEGRAM_BOT_TOKEN;
 
 const bot = new TelegramBot(token, { polling: true });
 
+const commands = [
+  { command: '/uuid1', description: 'Gera um UUID versão 1' },
+  { command: '/uuid4', description: 'Gera um UUID versão 4' },
+  { command: '/uuid4 {quantidade}', description: 'Gera uma quantidade específica de UUIDs versão 4' },
+];
+
+bot.setMyCommands(commands);
+
 bot.onText(/\/uuid1/, (msg) => {
   const chatId = msg.chat.id;
   const uuid1 = generateUuid1();
